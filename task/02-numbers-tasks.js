@@ -9,7 +9,6 @@
  *                                                                                          *
  ********************************************************************************************/
 
-
 /**
  * Returns an area of a rectangle given by width and heigth.
  *
@@ -22,9 +21,8 @@
  *   5, 5  => 25
  */
 function getRectangleArea(width, height) {
-    throw new Error('Not implemented');
+    return Math.imul(width, height);
 }
-
 
 /**
  * Returns a circumference of circle given by radius.
@@ -38,7 +36,7 @@ function getRectangleArea(width, height) {
  *   0    => 0
  */
 function getCicleCircumference(radius) {
-    throw new Error('Not implemented');
+    return 2 * Math.PI * radius;
 }
 
 /**
@@ -54,7 +52,12 @@ function getCicleCircumference(radius) {
  *  -3, 3  => 0
  */
 function getAverage(value1, value2) {
-    throw new Error('Not implemented');
+    // С защитой от переполнения:
+    return value1 / 2 + value2 / 2;
+
+    // При использовании стандартной математической формулы:
+    // return (value1 + value2) / 2;
+    // может возникать переполнение.
 }
 
 /**
@@ -73,7 +76,7 @@ function getAverage(value1, value2) {
  *   (-5,0) (10,-10) => 18.027756377319946
  */
 function getDistanceBetweenPoints(x1, y1, x2, y2) {
-    throw new Error('Not implemented');
+    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
 }
 
 /**
@@ -89,9 +92,8 @@ function getDistanceBetweenPoints(x1, y1, x2, y2) {
  *   5*x = 0         => 0
  */
 function getLinearEquationRoot(a, b) {
-    throw new Error('Not implemented');
+    return -b / a;
 }
-
 
 /**
  * Returns an angle (in radians) between two vectors given by xi and yi, coordinates in Cartesian plane
@@ -111,7 +113,11 @@ function getLinearEquationRoot(a, b) {
  *   (0,1) (1,2)     => 0
  */
 function getAngleBetweenVectors(x1, y1, x2, y2) {
-    throw new Error('Not implemented');
+    let scalarProduct = (x1 * x2 + y1 * y2);
+    let vec1Length = Math.hypot(x1, y1);
+    let vec2Length = Math.hypot(x2, y2);
+
+    return Math.acos(scalarProduct / vec1Length * vec2Length);
 }
 
 /**
@@ -127,9 +133,8 @@ function getAngleBetweenVectors(x1, y1, x2, y2) {
  *     0     => 0
  */
 function getLastDigit(value) {
-    throw new Error('Not implemented');
+    return value % 10;
 }
-
 
 /**
  * Returns a number by given string representation.
@@ -143,7 +148,7 @@ function getLastDigit(value) {
  * '-525.5'     => -525.5
  */
 function parseNumberFromString(value) {
-    throw new Error('Not implemented');
+    return Number(value);
 }
 
 /**
@@ -160,7 +165,7 @@ function parseNumberFromString(value) {
  *   1,2,3   => 3.741657386773941
  */
 function getParallelipidedDiagonal(a,b,c) {
-    throw new Error('Not implemented');
+    return Math.hypot(a, b, c);
 }
 
 /**
@@ -181,7 +186,8 @@ function getParallelipidedDiagonal(a,b,c) {
  *   1678, 3  => 2000
  */
 function roundToPowerOfTen(num, pow) {
-    throw new Error('Not implemented');
+    let powerOfTen = Math.pow(10, pow);
+    return Math.round(num / powerOfTen) * powerOfTen;
 }
 
 /**
@@ -202,7 +208,24 @@ function roundToPowerOfTen(num, pow) {
  *   17 => true
  */
 function isPrime(n) {
-    throw new Error('Not implemented');
+    if (n <= 1) {
+        return false;
+    } else if (n <= 3) {
+        return true;
+    } else if (n % 2 == 0 || n % 3 == 0) {
+        return false;
+    }
+    
+    let i = 5;
+    
+    while (i * i <= n) {
+        if (n % i == 0) {
+            return false;
+        }
+        i += 2;
+    }
+
+    return true;
 }
 
 /**
@@ -221,7 +244,8 @@ function isPrime(n) {
  *   toNumber(new Number(42), 0) => 42
  */
 function toNumber(value, def) {
-    throw new Error('Not implemented');
+    let number = Number(value);
+    return Number.isNaN(number) ? def : number;    
 }
 
 module.exports = {
