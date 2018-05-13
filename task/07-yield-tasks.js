@@ -8,7 +8,6 @@
  *                                                                                          *
  ********************************************************************************************/
 
-
 /**
  * Returns the lines sequence of "99 Bottles of Beer" song:
  *
@@ -33,9 +32,23 @@
  *
  */
 function* get99BottlesOfBeer() {
-    throw new Error('Not implemented');
-}
+    let currBottlesOfBeer = 99;
 
+    while (currBottlesOfBeer > 2) {
+        yield `${currBottlesOfBeer} bottles of beer on the wall, ${currBottlesOfBeer} bottles of beer.`;
+        yield `Take one down and pass it around, ${currBottlesOfBeer - 1} bottles of beer on the wall.`;
+        currBottlesOfBeer--;
+    }
+
+    yield '2 bottles of beer on the wall, 2 bottles of beer.';
+    yield 'Take one down and pass it around, 1 bottle of beer on the wall.';
+
+    yield '1 bottle of beer on the wall, 1 bottle of beer.';
+    yield 'Take one down and pass it around, no more bottles of beer on the wall.';
+
+    yield 'No more bottles of beer on the wall, no more bottles of beer.';
+    yield 'Go to the store and buy some more, 99 bottles of beer on the wall.';    
+}
 
 /**
  * Returns the Fibonacci sequence:
@@ -47,9 +60,20 @@ function* get99BottlesOfBeer() {
  *
  */
 function* getFibonacciSequence() {
-    throw new Error('Not implemented');
-}
+    let prevNumber = 0;
+    let currNumber = 1;
+    let nextNumber = 1;
 
+    yield prevNumber;
+    yield currNumber;
+
+    while (true) {
+        nextNumber = prevNumber + currNumber;
+        yield nextNumber;
+        prevNumber = currNumber;
+        currNumber = nextNumber;
+    }   
+}
 
 /**
  * Traverses a tree using the depth-first strategy
@@ -127,8 +151,30 @@ function* breadthTraversalTree(root) {
  */
 function* mergeSortedSequences(source1, source2) {
     throw new Error('Not implemented');
-}
 
+    //let mergedSortedSequence = [];
+
+    let source1Array = Array.from(source1);
+    let source2Array = Array.from(source2);
+
+    // let value = 0;
+    // while ((value = source1.next().value) !== undefined) {
+    //     mergedSortedSequence.push(value);
+    // }
+    // while ((value = source2.next().value) !== undefined) {
+    //     mergedSortedSequence.push(value);
+    // }
+
+    let mergedSortedSequence = source1Array.concat(source2Array);
+
+    mergedSortedSequence.sort();
+
+    let index = 0;
+    while (index < mergedSortedSequence.length) {
+        yield mergedSortedSequence[index];
+        index++;
+    }    
+}
 
 module.exports = {
     get99BottlesOfBeer: get99BottlesOfBeer,
