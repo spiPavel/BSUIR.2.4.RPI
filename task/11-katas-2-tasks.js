@@ -33,10 +33,36 @@
  *   '|_||_  _||_| _||_| _||_| _|\n',
  *
  */
-function parseBankAccount(bankAccount) {
-    throw new Error('Not implemented');
-}
+function parseBankAccount(bankAccount) {    
+    let floors = bankAccount.split('\n');
 
+    let resultString = '';
+    for (let i = 0; i < floors[0].length; i += 3) {
+        if ((floors[1][i + 1] === ' ') && (floors[2][i + 1] === '_')) {
+            resultString += '0';
+        } else if ((floors[0][i + 1] === ' ') && (floors[1][i + 1] === ' ')) {
+            resultString += '1';
+        } else if (floors[2][i + 2] === ' ') {
+            resultString += '2';
+        } else if ((floors[1][i] === ' ') && (floors[1][i + 1] === '_')) {
+            resultString += '3';
+        } else if ((floors[0][i + 1] === ' ') && (floors[1][i + 1] === '_')) {
+            resultString += '4';
+        } else if ((floors[1][i + 2] === ' ') && (floors[2][i] === ' ')) {
+            resultString += '5';
+        } else if ((floors[1][i + 2] === ' ') && (floors[2][i] === '|')) {
+            resultString += '6';
+        } else if ((floors[0][i + 1] === '_') && (floors[2][i + 1] === ' ')) {
+            resultString += '7';
+        } else if (floors[2][i] === ' ') {
+            resultString += '9';            
+        } else {
+            resultString += '8';
+        }
+    }
+
+    return Number(resultString);
+}
 
 /**
  * Returns the string, but with line breaks inserted at just the right places to make sure that no line is longer than the specified column number.

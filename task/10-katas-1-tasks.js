@@ -18,7 +18,18 @@
  */
 function createCompassPoints() {
     throw new Error('Not implemented');
-    var sides = ['N','E','S','W'];  // use array of cardinal directions only!
+    //var sides = ['N','E','S','W'];  // use array of cardinal directions only!
+    var sides = ['N','E','S','W','N'];  // use array of cardinal directions only!
+
+    let compassCardinalPoints = [];
+
+    let currentAzimuth = 0.00;
+    const azimuthAddition = 11.25;
+    for (let i = 0; i < sides.length - 1; i++) {
+        
+    }
+
+    return compassCardinalPoints;
 }
 
 

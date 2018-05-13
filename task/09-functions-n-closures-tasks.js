@@ -25,10 +25,9 @@
  *   getComposition(Math.sin, Math.asin)(x) => Math.sin(Math.acos(x))
  *
  */
-function getComposition(f,g) {
-    throw new Error('Not implemented');
+function getComposition(f,g) {    
+    return (x => f(g(x)));
 }
-
 
 /**
  * Returns the math power function with the specified exponent
@@ -46,10 +45,9 @@ function getComposition(f,g) {
  *   power05(16) => 4
  *
  */
-function getPowerFunction(exponent) {
-    throw new Error('Not implemented');
+function getPowerFunction(exponent) {    
+    return new Function('base', `return Math.pow(base, ${exponent})`);
 }
-
 
 /**
  * Returns the polynom function of one argument based on specified coefficients.
@@ -66,6 +64,7 @@ function getPowerFunction(exponent) {
  */
 function getPolynom() {
     throw new Error('Not implemented');
+    //return 
 }
 
 
@@ -171,7 +170,7 @@ function partialUsingArguments(fn) {
  *   getId10() => 11
  */
 function getIdGeneratorFunction(startFrom) {
-    throw new Error('Not implemented');
+    throw new Error('Not implemented');    
 }
 
 
