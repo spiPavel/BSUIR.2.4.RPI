@@ -7,7 +7,6 @@
  *                                                                                          *
  ********************************************************************************************/
 
-
 /**
  * Returns the regexp that matches a GUID string representation
  * '{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}',
@@ -31,9 +30,8 @@
  * @return {RegExp}
  */
 function getRegexForGuid() {
-   throw new Error('Not implemented');
+    return /{[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}}/i;
 }
-
 
 /**
  * Returns the regexp that matches all the strings from first column
@@ -52,10 +50,9 @@ function getRegexForGuid() {
  * @return {RegExp}
  *
  */
-function getRegexForPitSpot() {
-   throw new Error('Not implemented');
+function getRegexForPitSpot() {    
+    return /^(pi|[^pP ])/;
 }
-
 
 /**
  * Returns the regexp that matches all IPv4 strings in
@@ -72,9 +69,11 @@ function getRegexForPitSpot() {
  * @return {RegExp}
  */
 function getRegexForIPv4() {
-   throw new Error('Not implemented');
+    //return /^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]?[0-9])\.){3}\1$/;
+    //const number = "(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]?[0-9])";
+    //return new Regex("^(" + number + "\.){3}" + number + "$");
+    return /^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]?[0-9])$/;
 }
-
 
 /**
  * Returns the regexp that matches all SSN (Social Security Number) codes in
@@ -91,9 +90,9 @@ function getRegexForIPv4() {
  * @return {RegExp}
  */
 function getRegexForSSN() {
-   throw new Error('Not implemented');
+    // Последняя цифра в группе цифр в правильных SSN всегда не ноль:    
+    return /^[0-9]{2}[1-9]-[0-9]{1}[1-9]-[0-9]{3}[1-9]$/;
 }
-
 
 /**
  * Returns the password validator regex.
@@ -115,10 +114,10 @@ function getRegexForSSN() {
  *   'PASSW0RD'.match(validator)  => false
  *   'Pa55'.match(validator) => false
  */
-function getPasswordValidator(minLength) {
-   throw new Error('Not implemented');
+function getPasswordValidator(minLength) {    
+    const alphanumeric = "[a-zA-Z0-9]";       
+    return new RegExp("^(?=" + alphanumeric + "*[a-z])(?=" + alphanumeric + "*[A-Z])(?=" + alphanumeric + "*[0-9])" + alphanumeric + "{" + minLength + ",}$");    
 }
-
 
 module.exports = {
     getRegexForGuid: getRegexForGuid,
