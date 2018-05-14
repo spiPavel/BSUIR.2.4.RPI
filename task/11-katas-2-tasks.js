@@ -88,10 +88,18 @@ function parseBankAccount(bankAccount) {
  *                                                                                                'sequence of',
  *                                                                                                'characters.'
  */
-function* wrapText(text, columns) {
-    throw new Error('Not implemented');
-}
+function* wrapText(text, columns) {    
+    let wordsFromSourceText = text.split(' ');
+    let correctLengthLine = '';    
 
+    while (wordsFromSourceText.length > 0) {
+        correctLengthLine = wordsFromSourceText.shift();        
+        while ((wordsFromSourceText.length > 0) && (correctLengthLine.length + 1 + wordsFromSourceText[0].length <= columns)) {
+            correctLengthLine += ' ' + wordsFromSourceText.shift();
+        }
+        yield correctLengthLine;
+    }
+}
 
 /**
  * Returns the rank of the specified poker hand.
