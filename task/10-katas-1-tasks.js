@@ -27,52 +27,22 @@ function createCompassPoints() {
     for (let i = 0; i < sides.length - 1; i++) {        
         if (i % 2 === 0) {
             compassCardinalPoints.push(new CompassCardinalPoint(sides[i], currentAzimuth));
-            currentAzimuth += azimuthAddition;
-
             compassCardinalPoints.push(new CompassCardinalPoint(sides[i] + 'b' + sides[i + 1], currentAzimuth));
-            currentAzimuth += azimuthAddition;
-
             compassCardinalPoints.push(new CompassCardinalPoint(sides[i] + sides[i] + sides[i + 1], currentAzimuth));
-            currentAzimuth += azimuthAddition;
-
             compassCardinalPoints.push(new CompassCardinalPoint(sides[i] + sides[i + 1] + 'b' + sides[i], currentAzimuth));
-            currentAzimuth += azimuthAddition;
-
             compassCardinalPoints.push(new CompassCardinalPoint(sides[i] + sides[i + 1], currentAzimuth));
-            currentAzimuth += azimuthAddition;
-
             compassCardinalPoints.push(new CompassCardinalPoint(sides[i] + sides[i + 1] + 'b' + sides[i + 1], currentAzimuth));
-            currentAzimuth += azimuthAddition;
-
             compassCardinalPoints.push(new CompassCardinalPoint(sides[i + 1] + sides[i] + sides[i + 1], currentAzimuth));
-            currentAzimuth += azimuthAddition;
-
-            compassCardinalPoints.push(new CompassCardinalPoint(sides[i + 1] + 'b' + sides[i], currentAzimuth));
-            currentAzimuth += azimuthAddition;
+            compassCardinalPoints.push(new CompassCardinalPoint(sides[i + 1] + 'b' + sides[i], currentAzimuth));            
         } else {
             compassCardinalPoints.push(new CompassCardinalPoint(sides[i], currentAzimuth));
-            currentAzimuth += azimuthAddition;
-
             compassCardinalPoints.push(new CompassCardinalPoint(sides[i] + 'b' + sides[i + 1], currentAzimuth));
-            currentAzimuth += azimuthAddition;
-
             compassCardinalPoints.push(new CompassCardinalPoint(sides[i] + sides[i + 1] + sides[i], currentAzimuth));
-            currentAzimuth += azimuthAddition;
-
-            compassCardinalPoints.push(new CompassCardinalPoint(sides[i + 1] + sides[i] + 'b' + sides[i], currentAzimuth));
-            currentAzimuth += azimuthAddition;
-
+            compassCardinalPoints.push(new CompassCardinalPoint(sides[i + 1] + sides[i] + 'b' + sides[i], currentAzimuth));            
             compassCardinalPoints.push(new CompassCardinalPoint(sides[i + 1] + sides[i], currentAzimuth));
-            currentAzimuth += azimuthAddition;
-
             compassCardinalPoints.push(new CompassCardinalPoint(sides[i + 1] + sides[i] + 'b' + sides[i + 1], currentAzimuth));
-            currentAzimuth += azimuthAddition;
-
-            compassCardinalPoints.push(new CompassCardinalPoint(sides[i + 1] + sides[i + 1] + sides[i], currentAzimuth));
-            currentAzimuth += azimuthAddition;
-
-            compassCardinalPoints.push(new CompassCardinalPoint(sides[i + 1] + 'b' + sides[i], currentAzimuth));
-            currentAzimuth += azimuthAddition;
+            compassCardinalPoints.push(new CompassCardinalPoint(sides[i + 1] + sides[i + 1] + sides[i], currentAzimuth));            
+            compassCardinalPoints.push(new CompassCardinalPoint(sides[i + 1] + 'b' + sides[i], currentAzimuth));         
         }
     }    
 
@@ -81,6 +51,7 @@ function createCompassPoints() {
     function CompassCardinalPoint(abbreviation, azimuth) {
         this.abbreviation = abbreviation;
         this.azimuth = azimuth;
+        currentAzimuth += azimuthAddition;
     }
 }
 
