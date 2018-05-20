@@ -134,7 +134,97 @@ const PokerRank = {
 }
 
 function getPokerHandRank(hand) {
-    throw new Error('Not implemented');
+    function getRand(hand)
+    {
+        const RANKS = 'A234567891JQKA',
+            fits = [],
+            ranks = {
+                count: [],
+                values: [],
+                sorted: []
+            };
+
+        for (let v of hand)
+        {
+            if (ranks.values.indexOf(v[0]) < 0)
+            {
+                ranks.values.push(v[0]);
+                ranks.count.push(1);
+            }
+            else
+            {
+                ranks.count[ranks.values.indexOf(v[0])]++;
+            }
+
+            if (fits.indexOf(v.slice(-1)) < 0)
+            {
+                fits.push(v.slice(-1));
+            }
+        }
+        ranks.sorted = ranks.values.sort((a, b) => RANKS.indexOf(a) - RANKS.indexOf(b));
+        if (ranks.sorted[0] === 'A' && ranks.sorted[1] !== '2')
+        {
+            ranks.sorted.splice(0, 1);
+            ranks.sorted.push('A');
+        }
+
+        this.getCount = function (cnt)
+        {
+            let result = 0;
+            for (let v of ranks.count)
+            {
+                if (v === cnt)
+                {
+                    result++;
+                }
+            }
+            return result;
+        }
+
+        this.isFlush = function()
+        {
+            return fits.length === 1;
+        };
+
+        this.isStraight = function() {
+            if (ranks.sorted.length < 5)
+            {
+                return false;
+            }
+            for (let i = 1; i < 5; i++)
+            {
+                if (
+                    RANKS.indexOf(ranks.sorted[i - 1]) + 1 !== RANKS.indexOf(ranks.sorted[i]) &&
+                    RANKS.indexOf(ranks.sorted[i - 1]) + 1 !== RANKS.lastIndexOf(ranks.sorted[i])
+                )
+                {
+                    return false;
+                }
+            }
+            return true;
+        };
+    }
+
+    hand = new getRand(hand);
+
+    if (hand.isFlush() && hand.isStraight())
+        return PokerRank.StraightFlush;
+    else if (hand.getCount(4))
+        return PokerRank.FourOfKind;
+    else if (hand.getCount(3) && hand.getCount(2))
+        return PokerRank.FullHouse;
+    else if (hand.isFlush())
+        return PokerRank.Flush;
+    else if (hand.isStraight())
+        return PokerRank.Straight;
+    else if (hand.getCount(3))
+        return PokerRank.ThreeOfKind;
+    else if (hand.getCount(2) == 2)
+        return PokerRank.TwoPairs;
+    else if (hand.getCount(2))
+        return PokerRank.OnePair;
+    else
+        return PokerRank.HighCard;
 }
 
 
@@ -169,7 +259,70 @@ function getPokerHandRank(hand) {
  *    '+-------------+\n'
  */
 function* getFigureRectangles(figure) {
-   throw new Error('Not implemented');
+    figure = figure.split('\n');
+
+    function processing(row, col, _row, _col, s) {
+        let i;
+        if (_row)
+            for (i = row + _row; i < figure.length && i >= 0; i += _row)
+                if (figure[i][col] === '+' && (figure[i][col - _row] === '+' || figure[i][col - _row] === s))
+                    return i;
+                else if (figure[i][col] === ' ')
+                    return false;
+        if (_col && figure[row + _col])
+            for (i = col + _col; i < figure[row].length && i >= 0; i += _col)
+                if (figure[row][i] === '+' && (figure[row + _col][i] === '+' || figure[row + _col][i] === s))
+                    return i;
+                else if (figure[row][i] === ' ')
+                    return false;
+        return false;
+    }
+
+    function rec(row, col) {
+        let _col,
+            _row,
+            resultCol,
+            resultRow;
+
+        _col = processing(row, col, 0, 1, '|');
+        if (_col === false) return false;
+        _row = processing(row, _col, 1, 0, '-');
+        if (_row === false) return false;
+        resultCol = _col;
+        resultRow = _row;
+
+        _col = processing(_row, _col, 0, -1, '|');
+        if (_col === false) return false;
+        _row = processing(_row, _col, -1, 0, '-');
+        if (_row === false) return false;
+
+        if (_row === row && _col === col) {
+            return {
+                width: resultCol - col + 1,
+                height: resultRow - row + 1
+            };
+        } else
+            return false;
+    }
+
+    function getFigure(obj) {
+        var line = '+' + '-'.repeat(obj.width - 2) + '+\n',
+            result  = line;
+        result += ('|' + ' '.repeat(obj.width - 2) + '|\n').repeat(obj.height - 2);
+        return result + line;
+    }
+
+    for (let i = 0; i < figure.length; i++)
+        for (let j = 0; j < figure[i].length; j++)
+            if (
+                figure[i][j] === '+' &&
+                figure[i + 1] && (figure[i + 1][j] === '|' || figure[i + 1][j] === '+') &&
+                (figure[i][j + 1] === '-' || figure[i][j + 1] === '+')
+            ) {
+                let obj = rec(i, j);
+                if (obj)
+                    yield getFigure(obj);
+            }
 }
 
 

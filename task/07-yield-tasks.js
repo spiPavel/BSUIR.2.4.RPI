@@ -76,14 +76,14 @@ function* getFibonacciSequence() {
 }
 
 /**
- * Traverses a tree using the depth-first strategy
+ * Traverses a tree using the depth-itemFirst strategy
  * See details: https://en.wikipedia.org/wiki/Depth-first_search
  *
- * Each node have child nodes in node.children array.
- * The leaf nodes do not have 'children' property.
+ * Each treeNode have child treeNodes in treeNode.children array.
+ * The leaf treeNodes do not have 'children' property.
  *
  * @params {object} root the tree root
- * @return {Iterable.<object>} the sequence of all tree nodes in depth-first order
+ * @return {Iterable.<object>} the sequence of all tree treeNodes in depth-itemFirst order
  * @example
  *
  *   var node1 = { n:1 }, node2 = { n:2 }, node3 = { n:3 }, node4 = { n:4 },
@@ -106,19 +106,26 @@ function* getFibonacciSequence() {
  *
  */
 function* depthTraversalTree(root) {
-    throw new Error('Not implemented');
+    let treeNode = [root];
+    while(treeNode.length) {
+        let currentTreeNode = treeNode.pop();
+        yield currentTreeNode;
+        if(currentTreeNode.children){
+            treeNode = treeNode.concat(currentTreeNode.children.reverse());
+        }
+    }
 }
 
 
 /**
- * Traverses a tree using the breadth-first strategy
+ * Traverses a tree using the breadth-itemFirst strategy
  * See details: https://en.wikipedia.org/wiki/Breadth-first_search
  *
- * Each node have child nodes in node.children array.
- * The leaf nodes do not have 'children' property.
+ * Each treeNode have child treeNodes in treeNode.children array.
+ * The leaf treeNodes do not have 'children' property.
  *
  * @params {object} root the tree root
- * @return {Iterable.<object>} the sequence of all tree nodes in breadth-first order
+ * @return {Iterable.<object>} the sequence of all tree treeNodes in breadth-itemFirst order
  * @example
  *     source tree (root = 1):
  *
@@ -132,7 +139,15 @@ function* depthTraversalTree(root) {
  *
  */
 function* breadthTraversalTree(root) {
-    throw new Error('Not implemented');
+    let treeNodes = [root];
+    for (let i = 0; i < treeNodes.length; i++) {
+        yield treeNodes[i];
+        if ('children' in treeNodes[i]) {
+            for (let j = 0; j < treeNodes[i].children.length; j++) {
+                treeNodes.push(treeNodes[i].children[j]);
+            }
+        }
+    }
 }
 
 
@@ -150,30 +165,26 @@ function* breadthTraversalTree(root) {
  *   [ 1, 3, 5, ... ], [ -1 ] => [ -1, 1, 3, 5, ...]
  */
 function* mergeSortedSequences(source1, source2) {
-    throw new Error('Not implemented');
+    let sequenceFirst = source1(), sequenceSecond = source2();
+    let itemFirst = sequenceFirst.next().value, itemSecond = sequenceSecond.next().value;
 
-    //let mergedSortedSequence = [];
-
-    let source1Array = Array.from(source1);
-    let source2Array = Array.from(source2);
-
-    // let value = 0;
-    // while ((value = source1.next().value) !== undefined) {
-    //     mergedSortedSequence.push(value);
-    // }
-    // while ((value = source2.next().value) !== undefined) {
-    //     mergedSortedSequence.push(value);
-    // }
-
-    let mergedSortedSequence = source1Array.concat(source2Array);
-
-    mergedSortedSequence.sort();
-
-    let index = 0;
-    while (index < mergedSortedSequence.length) {
-        yield mergedSortedSequence[index];
-        index++;
-    }    
+    while (itemFirst != undefined || itemSecond != undefined) {
+        if (itemFirst != undefined && itemSecond != undefined) {
+            if (itemFirst < itemSecond) {
+                yield itemFirst;
+                itemFirst = sequenceFirst.next().value;
+            } else {
+                yield itemSecond;
+                itemSecond = sequenceSecond.next().value;
+            }
+        } else if (itemFirst != undefined) {
+            yield itemFirst;
+            itemFirst = sequenceFirst.next().value;
+        } else if (itemSecond != undefined) {
+            yield itemSecond;
+            itemSecond = sequenceSecond.next().value;
+        }
+    }  
 }
 
 module.exports = {

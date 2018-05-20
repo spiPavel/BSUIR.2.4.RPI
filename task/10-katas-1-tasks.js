@@ -92,7 +92,25 @@ createCompassPoints();
  *   'nothing to do' => 'nothing to do'
  */
 function* expandBraces(str) {
-    throw new Error('Not implemented');
+    let forExpanding = [str];
+    let appearedElements = new Array();
+    let matched, replacementArray;
+
+    while (forExpanding.length > 0) {
+        str = forExpanding.pop();
+        matched = str.match(/{([^{}]*)}/);
+
+        if (matched != null) {
+            replacementArray = matched[1].split(',');
+
+            for (let replacement of replacementArray) {
+                forExpanding.push(str.replace(matched[0], replacement));
+            }
+        } else if (!appearedElements.includes(str)) {
+            appearedElements.push(str);
+            yield str;
+        }
+    }
 }
 
 
@@ -124,7 +142,36 @@ function* expandBraces(str) {
  *
  */
 function getZigZagMatrix(n) {
-    throw new Error('Not implemented');
+    let matrix = Array();
+
+    for (var i = 0; i < n; i++)
+        matrix[i] = Array();
+
+    var i = 1, j = 1;
+    for (var e = 0; e < n * n; e++) {
+        matrix[i - 1][j - 1] = e;
+
+        if ((i + j) % 2 === 0) {
+            if (j < n) {
+                j++;
+            } else {
+                i += 2;
+            }
+            if (i > 1) {
+                i--;
+            }
+        } else {
+            if (i < n) {
+                i++;
+            } else {
+                j += 2;
+            }
+            if (j > 1) {
+                j--;
+            }
+        }
+    }
+    return matrix;
 }
 
 
@@ -149,7 +196,45 @@ function getZigZagMatrix(n) {
  *
  */
 function canDominoesMakeRow(dominoes) {
-    throw new Error('Not implemented');
+    for (let i = 0; i < (dominoes.length - 1); i++) {
+        if (dominoes[i][1] != dominoes[i + 1][0]) {
+
+            //swap domino
+            let buffer = dominoes[i + 1][0];
+            dominoes[i + 1][0] = dominoes[i + 1][1];
+            dominoes[i + 1][1] = buffer;
+
+            if (dominoes[i][1] != dominoes[i + 1][0]) {
+
+                //change domino
+                var wasFound = false
+                for (let j = i + 2; ((j < dominoes.length) && (!wasFound)); j++) {
+                    if (dominoes[i][1] == dominoes[j][0]) {
+                        wasFound = true;
+                        let tempDomino = dominoes[j];
+                        dominoes[j] = dominoes[i + 1];
+                        dominoes[i + 1] = tempDomino;
+                    }
+                    else if (dominoes[i][1] == dominoes[j][1]) {
+                        wasFound = true;
+
+                        //swap buffer domino
+                        let tempNumb = dominoes[j][1];
+                        dominoes[j][1] = dominoes[j][0];
+                        dominoes[j][0] = tempNumb;
+
+                        let tempDomino = dominoes[j];
+                        dominoes[j] = dominoes[i + 1];
+                        dominoes[i + 1] = tempDomino;
+                    }
+                }
+                if (!wasFound) {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
 }
 
 
@@ -173,7 +258,28 @@ function canDominoesMakeRow(dominoes) {
  * [ 1, 2, 4, 5]          => '1,2,4,5'
  */
 function extractRanges(nums) {
-    throw new Error('Not implemented');
+    let minValue, maxValue;
+    let resultArr = Array();
+    while (nums.length > 0) {
+        minValue = nums.shift();
+        maxValue = minValue;
+        while ((nums.length > 0) && (nums[0] - maxValue == 1)) {
+            maxValue = nums.shift();
+        }
+        switch (maxValue - minValue) {
+            case 0:
+                resultArr.push(minValue.toString());
+                break
+            case 1:
+                resultArr.push(minValue.toString());
+                resultArr.push(maxValue.toString());
+                break;
+            default:
+                resultArr.push(minValue + '-' + maxValue);
+                break;
+        }
+    }
+    return resultArr.toString();
 }
 
 module.exports = {
