@@ -60,18 +60,6 @@ function getJSON(obj) {
  *
  */
 function fromJSON(proto, json) {
-    // let jObj = JSON.parse(json);
-    // let object = Object.create(proto);
-    
-    // for (let field in proto.prototype) {
-    // object[field] = proto[field];
-    // }
-    
-    // for (let field in jObj) {
-    // object[field] = jObj[field]
-    // }
-    // return Object.setPrototypeOf(jObj, proto);
-
     return Object.setPrototypeOf(JSON.parse(json), proto);
 }
 
