@@ -1,0 +1,36 @@
+* {
+    font-family: "Arial";
+}
+
+#query-result {
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+}
+
+
+.video {
+    min-width: 400px;
+    flex-grow: 1;
+}
+
+
+
+/*@media only screen and (min-width: 1024px) { */
+	.query-result div {
+	    display: flex;
+    	flex-flow: row nowrap;
+	}
+	.query-result img {
+		display: inline;
+		margin: 0;
+	}
+
+@media only screen and (max-width: 640px), only screen and (max-device-width: 640px) {
+	.query-result {
+	    display: flex;
+    	flex-flow: column nowrap;
+    }
+}
+@media only screen and (max-width: 460px), only screen and (max-device-width: 460px) {
+}

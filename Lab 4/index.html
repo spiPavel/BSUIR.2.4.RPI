@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>YouTube Helper</title>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <script src="search.js"></script>
+        <script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
+    </head>
+    <body>
+        <form action="#">
+            <input type="search" id="searchQuery" placeholder="Enter the query">
+            <input type="button" id="searchButton" value="🔍">
+            <script>
+                searchButton.onclick = onSearchButtonClicked;
+            </script>
+            <br><br>
+        </form>
+        <main>    
+            <!-- <div class="container"> -->
+                <div id="query-result"></div>
+            <!-- </div> -->
+        </main>
+        <form action="#">
+            <br>
+            <input type="button" id="loadMoreButton" value="Load more..." style="visibility:hidden;">
+            <script>
+                loadMoreButton.onclick = onLoadMoreButtonClicked;
+            </script>
+        </form>
+    </body>
+</html>
