@@ -11,7 +11,7 @@ function onClientLoad() {
 }
 
 function onYouTubeApiLoad() {    
-    gapi.client.setApiKey('AIzaSyA13DC5jUrtq2VINLMMqk9QiKKz-hO1KnQ'); // Мой ключ, полученный на https://console.developers.google.com.
+    gapi.client.setApiKey('Put_YouTube_API_Key_Here'); // Мой ключ, полученный на https://console.developers.google.com.
 }
 
 function onSearchButtonClicked() {
